@@ -1,1 +1,184 @@
+1.HOME.HTML
 
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="static\home.css">
+</head>
+<body>
+    <h1>Welcome to Missing Persons Database</h1>
+    <nav>
+        <a href="{{ url_for('update_missing') }}">Update Missing Person</a>
+        <a href="{{ url_for('search_missing') }}">Search Missing Person</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</body>
+</html>
+
+
+
+2.LOGIN.HTML
+
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="static/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <div class="login-form">
+            <form method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+    </div>
+</body>
+</html>
+
+
+3.REGISTER.HTML
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="static\register.css">
+</head>
+<body>
+    <div>
+        <h1>Register</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                     <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="contact_info" placeholder="Contact Info" required>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </div>
+</body>
+</html>
+
+
+
+4.SEARCH_MISSING.HTML
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Missing Person</title>
+    <link rel="stylesheet" href="static\searchmissingperson.css">
+</head>
+<body>
+    <h1>Search Missing Person</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Search</button>
+    </form>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
+
+
+
+5.SEARCH_RESULTS.HTML
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Result</title>
+    <link rel="stylesheet" href="static/searchresults.css">
+</head>
+<body>
+    <h1>Missing Person Found</h1>
+    <div class="result-container">
+        <div class="person-info">
+            <h2>{{ person.name }}</h2>
+            <p><strong>Age:</strong> {{ person.age }}</p>
+            <p><strong>Gender:</strong> {{ person.gender }}</p>
+            <p><strong>Description:</strong> {{ person.description }}</p>
+            <p><strong>Guardian Email:</strong> {{ person.guardian_email }}</p>
+        </div>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename=person.image_path) }}" alt="{{ person.name }}">
+            
+        </div>
+    </div>
+    <p class="notification">An email notification has been sent to the guardian.</p>
+    <a href="{{ url_for('home') }}" class="home-link">Back to Home</a>
+</body>
+</html>
+
+
+
+6.UPDATE_MISSING.HTML
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Missing Person</title>
+    <link rel="stylesheet" href="static/updatemissing.css">
+</head>
+<body>
+    <h1>Update Missing Person</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="number" name="age" placeholder="Age" required>
+        <select name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <textarea name="description" placeholder="Description"></textarea>
+        <input type="email" name="guardian_email" placeholder="Guardian Email" required>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
