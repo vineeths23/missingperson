@@ -4,3 +4,5 @@ mysql-connector-python
 opencv-python
 Pillow
 numpy
+dlib
+face_recognition
