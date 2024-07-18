@@ -1,0 +1,21 @@
+CREATE DATABASE missing_persons_db;
+USE missing_persons_db;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    contact_info VARCHAR(255)
+);
+
+CREATE TABLE missing_persons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT,
+    gender VARCHAR(10),
+    description TEXT,
+    guardian_email VARCHAR(100),
+    image_path VARCHAR(255),
+    face_encoding BLOB
+);
